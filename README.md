@@ -1,177 +1,45 @@
-﻿# patient-management
+# Patient Management System
 
- Patient Management System is a scalable, microservices-based backend that manages patient data and related workflows.
-It uses Spring Boot for services and includes secure authentication, async event processing with Kafka, API routing via gateway, persistence with PostgreSQL, and containerization with Docker — deployed to AWS ECS. 
-GitHub
+Patient Management System is a scalable, microservices-based backend that manages patient data and related workflows.  
+It is built using Spring Boot and follows modern backend engineering practices including secure authentication, asynchronous event-driven communication, API gateway routing, and cloud-native deployment.
 
-Key Technologies
-Layer	Technology
-Language	Java (17)
-Framework	Spring Boot (Microservices)
-Messaging	Apache Kafka
-Authentication	JWT
-API Routing	API Gateway
-Database	PostgreSQL
-Deployment	Docker, AWS ECS
-Communication	REST, gRPC
+---
 
-2. Repository Structure
+## Tech Stack
+
+- **Language:** Java 17
+- **Framework:** Spring Boot (Microservices)
+- **API Gateway:** Spring Cloud Gateway
+- **Authentication:** JWT (JSON Web Token)
+- **Messaging:** Apache Kafka
+- **Database:** PostgreSQL
+- **Inter-service Communication:** REST, gRPC
+- **Containerization:** Docker
+- **Deployment:** AWS ECS
+
+---
+
+## Microservices
+
+- **Patient Service** – Manages patient CRUD operations
+- **Auth Service** – Handles authentication and JWT token generation
+- **Billing Service** – Manages billing workflows and accounts
+- **Analytics Service** – Consumes Kafka events for analytics
+- **API Gateway** – Central entry point and request routing
+
+---
+
+## Repository Structure
+
+```text
 patient-repository/
-├── analytics-service/
-├── api-gateway/
-├── auth-service/
-├── billing-service/
-├── patient-service/
-├── integration-test/
-├── Docker/
-├── infrastructure/
-├── api-requests/
-├── README.md
-├── .idea/ / .vscode/
-
-
-Each folder implements a separate microservice or infrastructure config. 
-GitHub
-
-3. Getting Started
-Prerequisites
-
-Java JDK 17+
-
-Docker & Docker Compose
-
-Kafka (locally or via Docker)
-
-PostgreSQL
-
-AWS credentials (for ECS deployment)
-
-4. Local Setup
-
-Clone the repository
-
-git clone https://github.com/shrivathsaJoisa/patient-repository.git
-cd patient-repository
-
-
-Configure Environment
-Each microservice should have its application-properties or environment variables for:
-
-Database URLs
-
-Kafka brokers
-
-JWT secret & expiry
-
-Start Services Locally
-Use either:
-
-Individual services via your IDE
-
-Docker Compose (if provided)
-
-docker compose up
-
-5. Authentication & Security
-
-JWT Authentication
-
-Users authenticate via the auth-service
-
-On success, a JWT token is issued
-
-Other services validate JWT in headers
-
-Helps secure REST endpoints
-
-6. Kafka Event Flow
-
-The system uses Apache Kafka for asynchronous event processing.
-
-Common use-cases:
-
-Patient creation triggers analytics events
-
-Billing service listens to patient-related events
-
-Make sure Kafka broker details are configured in each service.
-
-7. API Gateway
-
-Acts as a central entry point
-
-Routes requests to appropriate services
-
-Handles cross-cutting concerns like authentication
-
-Example Gateway routes (configurable):
-
-/auth/**
-/patients/**
-/billing/**
-/analytics/**
-
-🗄 8. Microservices Details
-Patient Service
-
-CRUD for patients
-
-Stores data in PostgreSQL
-
-Auth Service
-
-Login / Register
-
-Token management (JWT)
-
-Billing Service
-
-Generates and manages patient billing
-
-Communicates via gRPC or REST
-
-Analytics Service
-
-Consumes Kafka events
-
-Generates usage metrics
-
-9. Dockerization
-
-Each service includes its own Dockerfile.
-
-Typical workflow:
-
-docker build -t patient-service .
-docker run -e SPRING_PROFILES_ACTIVE=prod patient-service
-
-
-Use Docker Compose if orchestrated.
-
-10. Deployment (AWS ECS)
-
-Each service container is deployed to Amazon ECS
-
-Useful features:
-
-Service scaling
-
-Task management
-
-Load balancing
-
-Set environment variables in ECS task definitions.
-
-11. Tests
-Integration Tests
-
-Check inter-service communication
-
-Validate event propagation via Kafka
-
-12. API Documentation
-Consider integrating OpenAPI / Swagger for API docs per service.
-Example: http://localhost:8080/swagger-ui.html
-
-Submit a pull request
-
+ ├── analytics-service/
+ ├── api-gateway/
+ ├── auth-service/
+ ├── billing-service/
+ ├── patient-service/
+ ├── integration-test/
+ ├── Docker/
+ ├── infrastructure/
+ ├── api-requests/
+ ├── README.md
