@@ -1,10 +1,10 @@
 package com.pm.authservice.service;
 
+import com.pm.authservice.dto.CreateUserRequestDTO;
 import com.pm.authservice.dto.LoginRequestDTO;
 import com.pm.authservice.model.User;
 import com.pm.authservice.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +36,26 @@ public class AuthService {
             jwtUtil.validateToken(token);return true;}
             catch (JwtException e) {return false;}
 
+    }
+
+    public Optional<String> extractRole(String token) {
+        try {
+            return Optional.ofNullable(jwtUtil.extractRole(token));
+        } catch (JwtException e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<User> createUser(CreateUserRequestDTO createUserRequestDTO) {
+        if (userService.findByEmail(createUserRequestDTO.getEmail()).isPresent()) {
+            return Optional.empty();
+        }
+
+        User user = new User();
+        user.setEmail(createUserRequestDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(createUserRequestDTO.getPassword()));
+        user.setRole(createUserRequestDTO.getRole().toUpperCase());
+
+        return Optional.of(userService.save(user));
     }
 }
