@@ -10,10 +10,11 @@ pipeline {
   environment {
     DOCKER_BUILDKIT = '1'
     COMPOSE_DOCKER_CLI_BUILD = '1'
-    COMPOSE_PROJECT_NAME = "patient-mgmt-${BUILD_NUMBER}"
+    COMPOSE_PROJECT_NAME = "patient-mgmt"
   }
 
   stages {
+
     stage('Checkout') {
       steps {
         checkout scm
@@ -22,52 +23,32 @@ pipeline {
 
     stage('Docker Tools') {
       steps {
-        script {
-          if (isUnix()) {
-            sh 'docker --version'
-            sh 'docker compose version'
-          } else {
-            bat 'docker --version'
-            bat 'docker compose version'
-          }
-        }
+        sh 'docker --version'
+        sh 'docker-compose version'
       }
     }
 
     stage('Compose Validate') {
       steps {
-        script {
-          if (isUnix()) {
-            sh 'docker compose config > /dev/null'
-          } else {
-            bat 'docker compose config > nul'
-          }
-        }
+        sh 'docker-compose config > /dev/null'
       }
     }
 
     stage('Compose Build') {
       steps {
-        script {
-          if (isUnix()) {
-            sh 'docker compose build'
-          } else {
-            bat 'docker compose build'
-          }
-        }
+        sh 'docker-compose build'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        sh 'docker-compose up -d'
       }
     }
   }
 
-  post {
-    always {
-      script {
-        if (isUnix()) {
-          sh 'docker compose down -v --remove-orphans || true'
-        } else {
-          bat 'docker compose down -v --remove-orphans'
-        }
-      }
-    }
+post {
+  failure {
+    sh 'docker-compose logs'
   }
 }
