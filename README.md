@@ -202,6 +202,6 @@ This repository now includes a root `Jenkinsfile` for CI/CD.
 1. Checkout repository from SCM
 2. Validate Docker and Docker Compose availability
 3. Validate compose file with `docker compose config`
-4. Build all services with `docker compose --profile frontend build`
+4. Build backend services with `docker compose build`
 5. Cleanup compose resources in `post` stage
 

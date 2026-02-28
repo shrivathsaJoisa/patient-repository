@@ -50,9 +50,9 @@ pipeline {
       steps {
         script {
           if (isUnix()) {
-            sh 'docker compose --profile frontend build'
+            sh 'docker compose build'
           } else {
-            bat 'docker compose --profile frontend build'
+            bat 'docker compose build'
           }
         }
       }
@@ -63,9 +63,9 @@ pipeline {
     always {
       script {
         if (isUnix()) {
-          sh 'docker compose --profile frontend down -v --remove-orphans || true'
+          sh 'docker compose down -v --remove-orphans || true'
         } else {
-          bat 'docker compose --profile frontend down -v --remove-orphans'
+          bat 'docker compose down -v --remove-orphans'
         }
       }
     }

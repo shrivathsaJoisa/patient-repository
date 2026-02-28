@@ -19,5 +19,5 @@ jobs:
       - name: Validate compose file
         run: docker compose config
 
-      - name: Build all services (including frontend profile)
-        run: docker compose --profile frontend build
+      - name: Build backend services
+        run: docker compose build
