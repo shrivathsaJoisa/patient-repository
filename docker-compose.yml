@@ -127,9 +127,21 @@ services:
       - "4004:4004"
     environment:
       AUTH_SERVICE_URL: http://auth-service:4005
+      PATIENT_SERVICE_URL: http://patient-service:4000
     depends_on:
       - auth-service
       - patient-service
+
+  frontend:
+    profiles:
+      - frontend
+    build:
+      context: ../patient-management-frontend
+    container_name: patient-management-frontend
+    ports:
+      - "${FRONTEND_PORT:-5173}:80"
+    depends_on:
+      - api-gateway
 
 volumes:
   patient-service-db-data:
