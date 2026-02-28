@@ -39,6 +39,12 @@ pipeline {
         sh 'docker-compose build'
       }
     }
+    //remove old containers and volumes
+    stage('Clean Up') {
+      steps {
+        sh 'docker-compose down -v'
+      }
+    }
 
     stage('Deploy') {
       steps {
@@ -52,5 +58,6 @@ pipeline {
       sh 'docker-compose logs'
     }
   }
+
 
 }
