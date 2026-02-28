@@ -136,7 +136,7 @@ services:
     profiles:
       - frontend
     build:
-      context: ../patient-management-frontend
+      context: ./frontend
     container_name: patient-management-frontend
     ports:
       - "${FRONTEND_PORT:-5173}:80"

@@ -187,3 +187,21 @@ docker run patient-service
 - Kafka event flow testing ensures async processing
 - API endpoints can be tested using Postman or Swagger
 
+## Jenkins CI/CD
+
+This repository now includes a root `Jenkinsfile` for CI/CD.
+
+### Jenkins Agent Requirements
+
+- Docker Engine installed and running
+- Docker Compose v2 (`docker compose`)
+- Agent user permission to run Docker commands
+
+### Pipeline Stages
+
+1. Checkout repository from SCM
+2. Validate Docker and Docker Compose availability
+3. Validate compose file with `docker compose config`
+4. Build all services with `docker compose --profile frontend build`
+5. Cleanup compose resources in `post` stage
+
